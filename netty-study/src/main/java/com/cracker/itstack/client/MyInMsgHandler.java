@@ -7,7 +7,7 @@ import io.netty.channel.socket.SocketChannel;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class MyClientHandler extends ChannelInboundHandlerAdapter {
+public class MyInMsgHandler extends ChannelInboundHandlerAdapter {
 
     /**
      * 当客户端主动链接服务端的链接后，这个通道就是活跃的了。也就是客户端与服务端建立了通信通道并且可以传输数据.
@@ -36,9 +36,9 @@ public class MyClientHandler extends ChannelInboundHandlerAdapter {
     @Override
     public void channelRead(final ChannelHandlerContext ctx, final Object msg) throws Exception {
         //接收msg消息
-        System.out.println(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()) + " 接收到消息：" + msg);
+        System.out.println(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()) + " 客户端接收到消息：" + msg);
         //通知客户端链消息发送成功
-        String str = "客户端收到：" + new Date() + " " + msg + "\r\n";
+        String str = "随机数：" + Math.random() * 10 + "\r\n";
         ctx.writeAndFlush(str);
     }
 
@@ -50,4 +50,5 @@ public class MyClientHandler extends ChannelInboundHandlerAdapter {
         ctx.close();
         System.out.println("异常信息：\r\n" + cause.getMessage());
     }
+
 }
